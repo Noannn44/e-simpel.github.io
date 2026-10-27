@@ -1,0 +1,2013 @@
+/* =========================================================
+   PALET WARNA BARU
+   Navy institusional + Biru safir + Aksen emas
+========================================================= */
+
+:root {
+  --sb-bg: #16161d;
+  --sb-bg-soft: rgba(255, 255, 255, 0.05);
+  --sb-bg-hover: rgba(255, 255, 255, 0.07);
+  --sb-border: rgba(255, 255, 255, 0.07);
+  --sb-text: #ffffff;
+  --sb-text-muted: #96969f;
+  --sb-text-dim: #6d6d76;
+
+  --color-primary: #fb7c3c;
+  --color-primary-dark: #f2600c;
+  --color-primary-soft: #ffeee1;
+
+  --card-blue: #2f6fed;
+  --card-blue-soft: #e9f1ff;
+
+  --card-orange: #fb8c3c;
+  --card-orange-soft: #ffeedd;
+
+  --card-purple: #8b5cf6;
+  --card-purple-soft: #f0eafe;
+
+  --card-green: #22c55e;
+  --card-green-soft: #e6f8ee;
+
+  --color-danger: #e53e3e;
+
+  --color-bg: #f5f6fa;
+  --color-surface: #ffffff;
+  --color-text: #1e2430;
+  --color-text-muted: #8a8f98;
+  --color-border: #eceef2;
+
+  --shadow-card: 0 4px 18px rgba(20, 20, 40, 0.05);
+  --radius-lg: 16px;
+  --radius-md: 12px;
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* =========================================================
+   E-GOVERNMENT STYLE
+   SISTEM ADMINISTRASI PERKANTORAN
+   MODERN / CLEAN / PROFESSIONAL
+========================================================= */
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&display=swap");
+
+/* =========================================================
+   RESET
+========================================================= */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Inter", "Segoe UI", Arial, sans-serif;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+/* =========================================================
+   SIDEBAR
+========================================================= */
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+
+  width: 250px;
+
+  background: var(--color-navy);
+  color: #ffffff;
+
+  padding: 28px 16px;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  z-index: 1000;
+
+  box-shadow: 8px 0 30px rgba(0, 0, 0, 0.12);
+
+  animation: sidebarMasuk 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes sidebarMasuk {
+  from {
+    transform: translateX(-24px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* =========================================================
+   PROFIL SIDEBAR
+========================================================= */
+
+.sidebar-profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+
+  padding: 6px 10px 24px;
+
+  margin-bottom: 10px;
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.sidebar-avatar {
+  width: 62px;
+  height: 62px;
+
+  border-radius: 50%;
+
+  background: var(--color-gold);
+  color: var(--color-navy);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-family: "Source Serif 4", Georgia, serif;
+  font-size: 22px;
+  font-weight: 700;
+
+  margin-bottom: 12px;
+
+  box-shadow: 0 0 0 4px rgba(212, 160, 23, 0.18);
+}
+
+.sidebar-profile-name {
+  font-size: 14px;
+  font-weight: 600;
+
+  color: #ffffff;
+}
+
+.sidebar-profile-sub {
+  font-size: 12px;
+
+  color: rgba(255, 255, 255, 0.5);
+
+  margin-top: 2px;
+}
+
+/* =========================================================
+   WIDGET KALENDER SIDEBAR
+========================================================= */
+
+.sidebar-calendar {
+  margin-top: 20px;
+
+  background: rgba(255, 255, 255, 0.06);
+
+  border-radius: 14px;
+
+  padding: 14px 12px;
+}
+
+.sidebar-calendar-head {
+  text-align: center;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  color: #ffffff;
+
+  margin-bottom: 10px;
+}
+
+.sidebar-calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+
+  text-align: center;
+}
+
+.cal-day-name {
+  font-size: 9px;
+
+  color: rgba(255, 255, 255, 0.4);
+
+  font-weight: 600;
+
+  padding-bottom: 4px;
+}
+
+.cal-date {
+  font-size: 11px;
+
+  color: rgba(255, 255, 255, 0.7);
+
+  padding: 4px 0;
+
+  border-radius: 6px;
+}
+
+.cal-date.is-today {
+  background: var(--color-gold);
+
+  color: var(--color-navy);
+
+  font-weight: 700;
+}
+
+/* Scrollbar Sidebar */
+
+.sidebar::-webkit-scrollbar {
+  width: 5px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+  background: var(--color-navy);
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: #393735;
+  border-radius: 10px;
+}
+
+/* =========================================================
+   SIDEBAR LOGO
+========================================================= */
+
+.sidebar .logo {
+  padding: 0 12px 25px;
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+
+  margin-bottom: 24px;
+}
+
+.sidebar .logo h2 {
+  color: #ffffff;
+
+  font-size: 24px;
+  font-weight: 800;
+
+  letter-spacing: -0.5px;
+
+  margin-bottom: 4px;
+}
+
+.sidebar .logo p {
+  color: #9c9a98;
+
+  font-size: 13px;
+  font-weight: 400;
+
+  margin: 0;
+}
+
+/* =========================================================
+   SIDEBAR SECTION TITLE
+========================================================= */
+
+.sidebar .menu-title {
+  color: #8c8986;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  text-transform: uppercase;
+
+  padding: 0 12px;
+
+  margin: 22px 0 10px;
+
+  letter-spacing: 0.7px;
+}
+
+/* =========================================================
+   SIDEBAR UL
+========================================================= */
+
+.sidebar ul {
+  list-style: none;
+
+  padding: 0 16px;
+  margin: 0;
+}
+
+/* =========================================================
+   SIDEBAR LI
+========================================================= */
+
+.sidebar ul li {
+  margin-bottom: 4px;
+}
+
+/* =========================================================
+   SIDEBAR LINK
+========================================================= */
+
+.sidebar ul li a,
+.sidebar a {
+  display: flex;
+  align-items: center;
+
+  width: 100%;
+
+  padding: 12px 16px;
+
+  border-radius: 999px;
+
+  color: #aaa7a4;
+
+  text-decoration: none;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  transition:
+    background 0.25s ease,
+    color 0.25s ease,
+    transform 0.12s ease,
+    box-shadow 0.25s ease;
+}
+
+/* =========================================================
+   SIDEBAR ICON
+========================================================= */
+
+.sidebar ul li a .icon {
+  width: 25px;
+  min-width: 25px;
+
+  margin-right: 10px;
+
+  font-size: 16px;
+
+  text-align: center;
+
+  opacity: 0.9;
+}
+
+/* =========================================================
+   SIDEBAR HOVER
+========================================================= */
+
+/* Background hover kini ditangani oleh .sidebar-pill (lihat di bawah) */
+
+/* Efek "ditekan" saat diklik */
+.sidebar ul li a:active {
+  transform: scale(0.97);
+}
+
+/* =========================================================
+   SIDEBAR ACTIVE (bentuk pil, seperti referensi)
+========================================================= */
+
+/* =========================================================
+   WRAPPER MENU + PILL YANG BISA GESER
+========================================================= */
+
+.sidebar-menu-wrap {
+  position: relative;
+
+  margin-left: -16px;
+  margin-right: -16px;
+}
+
+.sidebar-pill {
+  position: absolute;
+
+  top: 0;
+  left: 0;
+  right: 0;
+
+  border-radius: 999px;
+
+  background: #f4f5f8;
+
+  z-index: 0;
+
+  opacity: 0;
+
+  pointer-events: none;
+
+  /* Efek "menyatu/tenggelam" ke permukaan sidebar gelap - dibuat halus */
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.12),
+    inset 0 1px 1px rgba(255, 255, 255, 0.6),
+    inset 0 -2px 3px rgba(16, 27, 45, 0.05);
+
+  transition:
+    transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    height 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.25s ease;
+}
+
+/* =========================================================
+   LINK & IKON DI ATAS PILL (butuh z-index)
+========================================================= */
+
+.sidebar ul li {
+  position: relative;
+  z-index: 1;
+}
+
+.sidebar ul li a:hover,
+.sidebar ul li a.active {
+  color: var(--color-navy);
+
+  font-weight: 700;
+}
+
+.sidebar ul li a:hover .icon,
+.sidebar ul li a.active .icon {
+  width: 28px;
+  height: 28px;
+
+  min-width: 28px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: var(--color-navy);
+  color: #ffffff;
+
+  border-radius: 9px;
+
+  margin-right: 12px;
+
+  opacity: 1;
+
+  transition:
+    background 0.25s ease,
+    color 0.25s ease;
+}
+
+/* =========================================================
+   LOGOUT
+========================================================= */
+
+.sidebar ul li.logout {
+  margin-top: 28px;
+
+  padding-top: 20px;
+
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sidebar ul li.logout a {
+  color: var(--color-danger);
+}
+
+.sidebar ul li.logout a:hover {
+  background: rgba(192, 57, 43, 0.12);
+
+  color: #e4574b;
+}
+
+/* =========================================================
+   NAVBAR
+========================================================= */
+
+.navbar {
+  position: fixed;
+
+  top: 0;
+  left: 250px;
+  right: 0;
+
+  height: 76px;
+
+  background: rgba(255, 255, 255, 0.96);
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 36px;
+
+  border-bottom: 1px solid #ededed;
+
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.035);
+
+  z-index: 999;
+
+  backdrop-filter: blur(10px);
+}
+
+/* =========================================================
+   NAVBAR LEFT (TOMBOL MENU + BRAND)
+========================================================= */
+
+.navbar-left {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+/* =========================================================
+   NAVBAR BRAND
+========================================================= */
+
+.navbar .brand {
+  display: flex;
+  flex-direction: column;
+}
+
+.navbar .brand-title {
+  font-size: 21px;
+
+  font-weight: 800;
+
+  letter-spacing: -0.4px;
+
+  color: #171717;
+}
+
+.navbar .brand-subtitle {
+  font-size: 13px;
+
+  color: #858585;
+
+  margin-top: 2px;
+}
+
+/* =========================================================
+   NAVBAR USER AREA
+========================================================= */
+
+.navbar .user-area {
+  display: flex;
+  align-items: center;
+
+  gap: 13px;
+}
+
+/* =========================================================
+   NOTIFICATION
+========================================================= */
+
+.navbar .notification {
+  width: 40px;
+  height: 40px;
+
+  border: 1px solid #e9e9e9;
+
+  border-radius: 11px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #ffffff;
+
+  cursor: pointer;
+
+  font-size: 17px;
+
+  transition: 0.2s ease;
+}
+
+.navbar .notification:hover {
+  background: #f7f7f7;
+
+  transform: translateY(-1px);
+
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+/* =========================================================
+   USER INFO
+========================================================= */
+
+.navbar .user-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.navbar .user-name {
+  font-weight: 700;
+
+  font-size: 14px;
+
+  color: #252525;
+}
+
+.navbar .user-role {
+  font-size: 12px;
+
+  color: #8a8a8a;
+}
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.content {
+  margin-left: 250px;
+
+  min-height: 100vh;
+
+  background: var(--color-bg);
+}
+
+/* =========================================================
+   DASHBOARD HEADER
+========================================================= */
+
+.dashboard-header {
+  display: flex;
+
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 26px;
+
+  background: var(--color-navy);
+
+  border-radius: 18px;
+
+  padding: 30px 34px;
+
+  position: relative;
+
+  overflow: hidden;
+}
+
+.dashboard-header::after {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  right: 0;
+  bottom: 0;
+
+  width: 5px;
+
+  background: var(--color-gold);
+}
+
+.dashboard-header .dashboard-title h1 {
+  font-family: "Source Serif 4", Georgia, serif;
+
+  font-size: 30px;
+
+  font-weight: 600;
+
+  letter-spacing: -0.3px;
+
+  margin-bottom: 7px;
+
+  color: #ffffff;
+}
+
+.dashboard-title p {
+  color: rgba(255, 255, 255, 0.65);
+
+  margin: 0;
+
+  font-size: 14px;
+}
+
+.dashboard-title strong {
+  color: var(--color-gold);
+
+  font-weight: 700;
+}
+
+/* =========================================================
+   DASHBOARD ACTION
+========================================================= */
+
+.dashboard-actions {
+  display: flex;
+
+  gap: 9px;
+}
+
+.dashboard-actions button {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+
+  background: #ffffff;
+
+  border: 1px solid #e2e2e2;
+
+  border-radius: 9px;
+
+  padding: 9px 15px;
+
+  font-size: 14px;
+  font-weight: 500;
+
+  color: #444;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.dashboard-actions button:hover {
+  border-color: #d4d4d4;
+
+  background: #fafafa;
+
+  transform: translateY(-1px);
+}
+
+/* =========================================================
+   STATISTICS GRID
+========================================================= */
+
+/* =========================================================
+   HERO KEDATANGAN TAMU (satu-satunya yang bisa diklik)
+========================================================= */
+
+.tamu-hero {
+  display: flex;
+
+  justify-content: space-between;
+  align-items: center;
+
+  background: var(--color-navy);
+
+  border-radius: 18px;
+
+  padding: 26px 30px;
+
+  margin-bottom: 18px;
+
+  box-shadow: 0 8px 20px rgba(16, 27, 45, 0.15);
+}
+
+.tamu-hero-label {
+  color: rgba(255, 255, 255, 0.6);
+
+  font-size: 13px;
+
+  margin-bottom: 6px;
+}
+
+.tamu-hero-number {
+  font-family: "Source Serif 4", Georgia, serif;
+
+  font-size: 40px;
+
+  font-weight: 600;
+
+  color: #ffffff;
+
+  line-height: 1.1;
+}
+
+.tamu-hero-change {
+  font-size: 12px;
+
+  font-weight: 600;
+
+  margin-top: 6px;
+}
+
+.btn-lihat-tamu {
+  background: var(--color-gold);
+
+  color: var(--color-navy);
+
+  text-decoration: none;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  padding: 11px 22px;
+
+  border-radius: 999px;
+
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.btn-lihat-tamu:hover {
+  transform: translateY(-2px);
+
+  box-shadow: 0 6px 14px rgba(212, 160, 23, 0.35);
+}
+
+/* =========================================================
+   STATISTIK RINGKAS (tidak bisa diklik, cuma angka)
+========================================================= */
+
+.stats-grid-simple {
+  display: grid;
+
+  grid-template-columns: repeat(4, 1fr);
+
+  gap: 16px;
+
+  margin-bottom: 20px;
+}
+
+.stat-simple {
+  background: #ffffff;
+
+  border: 1px solid #eee;
+
+  border-radius: 14px;
+
+  padding: 16px 18px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  cursor: default;
+}
+
+.stat-simple-label {
+  font-size: 12px;
+
+  color: #8a8a8a;
+}
+
+.stat-simple-number {
+  font-family: "Source Serif 4", Georgia, serif;
+
+  font-size: 26px;
+
+  font-weight: 600;
+
+  color: #171717;
+}
+
+.stats-grid {
+  display: grid;
+
+  grid-template-columns: repeat(4, 1fr);
+
+  gap: 18px;
+
+  margin-bottom: 20px;
+}
+
+/* =========================================================
+   STAT CARD
+========================================================= */
+
+.stat-card {
+  position: relative;
+
+  background: var(--color-navy);
+
+  border: 1px solid rgba(255, 255, 255, 0.06);
+
+  border-radius: 18px;
+
+  padding: 20px;
+
+  min-height: 145px;
+
+  box-shadow: 0 8px 20px rgba(16, 27, 45, 0.18);
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+
+  display: block;
+
+  text-decoration: none;
+  color: #ffffff;
+
+  cursor: pointer;
+}
+
+.stat-card.highlight {
+  background: var(--color-gold);
+}
+
+.stat-card:hover {
+  transform: translateY(-4px);
+
+  box-shadow: 0 14px 28px rgba(16, 27, 45, 0.28);
+}
+
+/* =========================================================
+   STAT TOP
+========================================================= */
+
+.stat-top {
+  display: flex;
+
+  align-items: center;
+}
+
+/* =========================================================
+   STAT ICON
+========================================================= */
+
+.stat-icon {
+  width: 43px;
+  height: 43px;
+
+  border-radius: 12px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 20px;
+
+  transition: 0.2s ease;
+}
+
+.stat-card:hover .stat-icon {
+  transform: scale(1.05);
+}
+
+/* =========================================================
+   STAT COLORS
+========================================================= */
+
+.stat-icon.orange {
+  background: var(--color-gold-soft);
+
+  color: var(--color-gold);
+}
+
+.stat-icon.blue {
+  background: #eaf3ff;
+
+  color: #2477ff;
+}
+
+.stat-icon.green {
+  background: #eaf8ef;
+
+  color: #20a957;
+}
+
+.stat-icon.yellow {
+  background: #fff7df;
+
+  color: #e9a400;
+}
+
+/* =========================================================
+   STAT ARROW
+========================================================= */
+
+.stat-arrow {
+  color: rgba(255, 255, 255, 0.8);
+
+  font-size: 21px;
+
+  font-weight: 600;
+}
+
+/* =========================================================
+   STAT LABEL
+========================================================= */
+
+.stat-card .label {
+  color: rgba(255, 255, 255, 0.65);
+
+  font-size: 14px;
+
+  font-weight: 500;
+
+  margin-top: 12px;
+}
+
+/* =========================================================
+   STAT NUMBER
+========================================================= */
+
+.stat-card .number {
+  font-family: "Source Serif 4", Georgia, serif;
+
+  font-size: 36px;
+
+  font-weight: 600;
+
+  line-height: 1.15;
+
+  margin-top: 4px;
+
+  color: #ffffff;
+}
+
+/* =========================================================
+   STAT FOOTER
+========================================================= */
+
+.stat-footer {
+  display: flex;
+
+  justify-content: space-between;
+  align-items: center;
+
+  margin-top: 10px;
+
+  font-size: 12px;
+
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.stat-up {
+  color: #7ee2a8;
+
+  font-weight: 600;
+}
+
+.stat-down {
+  color: #ff8a80;
+
+  font-weight: 600;
+}
+
+.stat-arrow-inline {
+  display: inline-flex;
+
+  margin-left: 6px;
+
+  font-size: 13px;
+}
+
+/* =========================================================
+   VARIAN HIGHLIGHT (kartu emas) - teks jadi navy
+========================================================= */
+
+.stat-card.highlight .stat-arrow,
+.stat-card.highlight .label,
+.stat-card.highlight .number,
+.stat-card.highlight .stat-footer {
+  color: var(--color-navy);
+}
+
+.stat-card.highlight .label {
+  opacity: 0.75;
+}
+
+.stat-card.highlight .stat-footer {
+  opacity: 0.65;
+}
+
+/* =========================================================
+   DASHBOARD GRID
+========================================================= */
+
+.dashboard-grid {
+  display: grid;
+
+  grid-template-columns: 2fr 1fr;
+
+  gap: 18px;
+
+  margin-bottom: 20px;
+}
+
+/* =========================================================
+   DASHBOARD PANEL
+========================================================= */
+
+.dashboard-panel {
+  background: #ffffff;
+
+  border: 1px solid #e9e9e9;
+
+  border-radius: 15px;
+
+  padding: 22px;
+
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.035);
+}
+
+/* =========================================================
+   PANEL HEADER
+========================================================= */
+
+.panel-header {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  margin-bottom: 20px;
+}
+
+.panel-header h3 {
+  font-family: "Source Serif 4", Georgia, serif;
+
+  font-size: 20px;
+
+  font-weight: 600;
+
+  color: #242424;
+
+  margin: 0;
+}
+
+.panel-header a {
+  font-size: 13px;
+
+  color: #555;
+
+  text-decoration: none;
+
+  border: 1px solid #dedede;
+
+  background: #ffffff;
+
+  padding: 7px 12px;
+
+  border-radius: 8px;
+
+  transition: 0.2s ease;
+}
+
+.panel-header a:hover {
+  background: #f8f8f8;
+
+  border-color: #cfcfcf;
+}
+
+/* =========================================================
+   CHART AREA
+========================================================= */
+
+.chart-summary {
+  display: flex;
+
+  gap: 55px;
+
+  margin-bottom: 18px;
+}
+
+.chart-number {
+  font-family: "Source Serif 4", Georgia, serif;
+
+  font-size: 30px;
+
+  font-weight: 600;
+
+  color: #202020;
+}
+
+.chart-label {
+  color: #777;
+
+  font-size: 13px;
+
+  margin-bottom: 5px;
+}
+
+.chart-change {
+  font-size: 12px;
+
+  color: #20a957;
+
+  font-weight: 600;
+}
+
+/* =========================================================
+   TABLE
+========================================================= */
+
+.table-container {
+  overflow-x: auto;
+
+  border-radius: 10px;
+}
+
+.table {
+  margin: 0;
+
+  border-color: #eeeeee;
+}
+
+/* Table header */
+
+.table thead th {
+  background: #fafafa;
+
+  color: #505050;
+
+  font-size: 13px;
+
+  font-weight: 700;
+
+  border-bottom: 1px solid #e5e5e5;
+
+  padding: 13px;
+}
+
+/* Table body */
+
+.table tbody td {
+  padding: 13px;
+
+  font-size: 14px;
+
+  vertical-align: middle;
+
+  color: #3f3f3f;
+}
+
+.table tbody tr {
+  transition: 0.15s ease;
+}
+
+.table tbody tr:hover {
+  background: #fafafa;
+}
+
+/* =========================================================
+   STATUS BADGE
+========================================================= */
+
+.status-badge {
+  display: inline-block;
+
+  padding: 5px 10px;
+
+  border-radius: 20px;
+
+  font-size: 12px;
+
+  font-weight: 700;
+}
+
+.status-success {
+  background: #eaf8ef;
+
+  color: #1e9d50;
+}
+
+.status-warning {
+  background: #fff6df;
+
+  color: #d99700;
+}
+
+.status-danger {
+  background: #ffeded;
+
+  color: #dc3838;
+}
+
+/* =========================================================
+   BUTTON
+========================================================= */
+
+.btn {
+  font-family: "Inter", "Segoe UI", sans-serif;
+
+  font-weight: 600;
+
+  font-size: 14px;
+}
+
+.btn-primary {
+  background: var(--color-primary) !important;
+
+  border-color: var(--color-primary) !important;
+
+  border-radius: 9px;
+
+  font-size: 14px;
+
+  padding: 9px 15px;
+
+  transition: 0.2s ease;
+}
+
+.btn-primary:hover {
+  background: var(--color-primary-hover) !important;
+
+  border-color: var(--color-primary-hover) !important;
+
+  transform: translateY(-1px);
+
+  box-shadow: 0 5px 12px rgba(36, 87, 197, 0.2);
+}
+
+.btn-success {
+  border-radius: 8px;
+
+  font-size: 13px;
+}
+
+.btn-warning,
+.btn-danger,
+.btn-info,
+.btn-secondary {
+  border-radius: 8px;
+
+  font-size: 13px;
+}
+
+/* =========================================================
+   FORM
+========================================================= */
+
+.form-control,
+.form-select {
+  border: 1px solid #dedede;
+
+  border-radius: 9px;
+
+  padding: 11px 13px;
+
+  font-family: "Inter", "Segoe UI", sans-serif;
+
+  font-size: 14px;
+
+  color: #303030;
+
+  background: #ffffff;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.form-control::placeholder {
+  color: #8a8a8a;
+
+  opacity: 1;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--color-primary);
+
+  box-shadow: 0 0 0 3px rgba(36, 87, 197, 0.1);
+
+  outline: none;
+}
+
+/* =========================================================
+   FORM LABEL
+========================================================= */
+
+.form-label,
+label {
+  font-size: 14px;
+
+  font-weight: 600;
+
+  color: #363636;
+
+  margin-bottom: 6px;
+}
+
+/* =========================================================
+   CARD BOOTSTRAP
+========================================================= */
+
+.card {
+  border: 1px solid #e9e9e9;
+
+  border-radius: 15px;
+
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.035);
+
+  overflow: hidden;
+}
+
+.card-header {
+  background: #ffffff;
+
+  border-bottom: 1px solid #eeeeee;
+
+  color: #252525;
+
+  font-size: 16px;
+
+  font-weight: 700;
+
+  padding: 15px 18px;
+}
+
+.card-body {
+  color: #3d3d3d;
+
+  font-size: 14px;
+}
+
+/* =========================================================
+   PAGE TITLE
+========================================================= */
+
+.content h1 {
+  font-size: 32px;
+
+  font-weight: 800;
+
+  letter-spacing: -0.6px;
+
+  color: #151515;
+}
+
+.content h2 {
+  font-size: 29px;
+
+  font-weight: 800;
+
+  letter-spacing: -0.5px;
+
+  color: #171717;
+}
+
+.content h3 {
+  font-size: 19px;
+
+  font-weight: 700;
+
+  color: #242424;
+}
+
+/* =========================================================
+   PARAGRAPH
+========================================================= */
+
+.content p {
+  font-size: 14px;
+}
+
+/* =========================================================
+   HR
+========================================================= */
+
+.content hr {
+  border: 0;
+
+  border-top: 1px solid #e5e5e5;
+
+  margin: 15px 0 25px;
+}
+
+/* =========================================================
+   SEARCH BOX
+========================================================= */
+
+.input-group .form-control {
+  border-radius: 9px 0 0 9px;
+}
+
+.input-group .btn {
+  border-radius: 0 9px 9px 0;
+
+  padding-left: 17px;
+
+  padding-right: 17px;
+}
+
+/* =========================================================
+   LINK
+========================================================= */
+
+a {
+  transition: 0.2s ease;
+}
+
+/* =========================================================
+   ALERT
+========================================================= */
+
+.alert {
+  border-radius: 10px;
+
+  font-size: 14px;
+}
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+.modal-content {
+  border: 0;
+
+  border-radius: 15px;
+
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+}
+
+.modal-header {
+  border-bottom: 1px solid #eeeeee;
+}
+
+.modal-title {
+  font-size: 17px;
+
+  font-weight: 700;
+}
+
+/* =========================================================
+   DROPDOWN
+========================================================= */
+
+.dropdown-menu {
+  border: 1px solid #e8e8e8;
+
+  border-radius: 10px;
+
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+
+  padding: 6px;
+}
+
+.dropdown-item {
+  font-size: 13px;
+
+  border-radius: 7px;
+
+  padding: 9px 11px;
+}
+
+.dropdown-item:hover {
+  background: #f7f7f7;
+}
+
+/* =========================================================
+   PAGINATION
+========================================================= */
+
+.pagination .page-link {
+  font-size: 13px;
+
+  color: #444;
+
+  border-color: #e5e5e5;
+
+  padding: 7px 11px;
+}
+
+.pagination .page-item.active .page-link {
+  background: var(--color-primary);
+
+  border-color: var(--color-primary);
+
+  color: #ffffff;
+}
+
+/* =========================================================
+   SURAT MASUK - TABLE CUSTOM
+========================================================= */
+
+.modern-table {
+  width: 100%;
+
+  border-collapse: collapse;
+}
+
+.modern-table thead {
+  background: #fafafa;
+}
+
+.modern-table th {
+  padding: 14px 16px;
+
+  color: #888;
+
+  font-size: 12px;
+
+  font-weight: 700;
+
+  text-transform: uppercase;
+
+  border-bottom: 1px solid #eee;
+
+  white-space: nowrap;
+}
+
+.modern-table td {
+  padding: 15px 16px;
+
+  color: #444;
+
+  font-size: 14px;
+
+  border-bottom: 1px solid #f1f1f1;
+
+  vertical-align: middle;
+}
+
+.modern-table tbody tr:hover {
+  background: #fff9f7;
+}
+
+/* =========================================================
+   SURAT MASUK - NOMOR SURAT
+========================================================= */
+
+.nomor-surat {
+  font-size: 14px;
+
+  font-weight: 600;
+
+  color: #333;
+}
+
+/* =========================================================
+   SURAT MASUK - PERIHAL
+========================================================= */
+
+.perihal {
+  max-width: 220px;
+
+  color: #555;
+
+  font-size: 14px;
+}
+
+/* =========================================================
+   SURAT MASUK - TANGGAL
+========================================================= */
+
+.tanggal {
+  white-space: nowrap;
+
+  color: #777;
+
+  font-size: 13px;
+}
+
+/* =========================================================
+   SURAT MASUK - ACTION
+========================================================= */
+
+.action-btn {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 32px;
+  height: 32px;
+
+  border-radius: 7px;
+
+  text-decoration: none;
+
+  margin-right: 4px;
+
+  font-size: 15px;
+
+  transition: 0.2s;
+}
+
+.btn-detail {
+  background: #eef5ff;
+
+  color: #3678d8;
+}
+
+.btn-edit {
+  background: #fff5df;
+
+  color: #d99718;
+}
+
+.btn-delete {
+  background: #ffeded;
+
+  color: #dc4d4d;
+}
+
+.btn-detail:hover {
+  background: #3678d8;
+
+  color: white;
+}
+
+.btn-edit:hover {
+  background: #d99718;
+
+  color: white;
+}
+
+.btn-delete:hover {
+  background: #dc4d4d;
+
+  color: white;
+}
+
+/* =========================================================
+   SURAT MASUK - SEARCH
+========================================================= */
+
+.search-form {
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+}
+
+.search-input {
+  width: 260px;
+
+  height: 38px;
+
+  border: 1px solid #e5e5e5;
+
+  border-radius: 8px;
+
+  padding: 0 12px;
+
+  font-size: 14px;
+
+  outline: none;
+}
+
+.search-input:focus {
+  border-color: var(--color-primary);
+
+  box-shadow: 0 0 0 3px rgba(36, 87, 197, 0.08);
+}
+
+.search-button {
+  height: 38px;
+
+  padding: 0 15px;
+
+  border: none;
+
+  border-radius: 8px;
+
+  background: var(--color-primary);
+
+  color: white;
+
+  font-size: 13px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.reset-button {
+  height: 38px;
+
+  padding: 0 13px;
+
+  border-radius: 8px;
+
+  background: #f1f1f1;
+
+  color: #666;
+
+  text-decoration: none;
+
+  display: flex;
+
+  align-items: center;
+
+  font-size: 13px;
+}
+
+/* =========================================================
+   SURAT MASUK - STAT CARD
+========================================================= */
+
+.stat-card small {
+  display: block;
+
+  color: #999;
+
+  font-size: 12px;
+}
+
+.stat-card strong {
+  font-size: 24px;
+
+  color: #222;
+}
+
+/* =========================================================
+   EMPTY DATA
+========================================================= */
+
+.empty-data {
+  text-align: center;
+
+  padding: 50px 20px;
+
+  color: #999;
+
+  font-size: 14px;
+}
+
+/* =========================================================
+   SCROLLBAR GLOBAL
+========================================================= */
+
+::-webkit-scrollbar {
+  width: 7px;
+
+  height: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c8c8c8;
+
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #aaaaaa;
+}
+
+/* =========================================================
+   RESPONSIVE - 1200px
+========================================================= */
+
+@media (max-width: 1200px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .content {
+    padding-left: 28px;
+
+    padding-right: 28px;
+  }
+}
+
+/* =========================================================
+   RESPONSIVE - 900px
+========================================================= */
+
+@media (max-width: 900px) {
+  .sidebar {
+    width: 220px;
+  }
+
+  .navbar {
+    left: 220px;
+  }
+
+  .content {
+    margin-left: 220px;
+  }
+
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =========================================================
+   RESPONSIVE - 700px
+========================================================= */
+
+@media (max-width: 700px) {
+  .sidebar {
+    position: relative;
+
+    width: 100%;
+
+    height: auto;
+
+    min-height: auto;
+  }
+
+  .navbar {
+    position: relative;
+
+    left: 0;
+
+    height: auto;
+
+    padding: 15px 18px;
+
+    gap: 15px;
+  }
+
+  .navbar .brand-title {
+    font-size: 18px;
+  }
+
+  .navbar .brand-subtitle {
+    font-size: 12px;
+  }
+
+  .content {
+    margin-left: 0;
+
+    padding: 25px 15px;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-header {
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 15px;
+  }
+
+  .dashboard-title h1 {
+    font-size: 28px;
+  }
+
+  .dashboard-actions {
+    width: 100%;
+  }
+
+  .dashboard-actions button {
+    flex: 1;
+
+    justify-content: center;
+  }
+
+  .chart-summary {
+    gap: 25px;
+  }
+
+  .search-form {
+    width: 100%;
+  }
+
+  .search-input {
+    width: 100%;
+  }
+}
+
+/* =========================================================
+   RESPONSIVE - 480px
+========================================================= */
+
+@media (max-width: 480px) {
+  .sidebar {
+    padding: 20px 12px;
+  }
+
+  .sidebar .logo h2 {
+    font-size: 21px;
+  }
+
+  .navbar {
+    padding: 13px 15px;
+  }
+
+  .navbar .user-info {
+    display: none;
+  }
+
+  .content {
+    padding: 22px 12px;
+  }
+
+  .content h1 {
+    font-size: 28px;
+  }
+
+  .content h2 {
+    font-size: 25px;
+  }
+
+  .content h3 {
+    font-size: 18px;
+  }
+
+  .stat-card {
+    padding: 17px;
+
+    min-height: 130px;
+  }
+
+  .stat-card .number {
+    font-size: 28px;
+  }
+
+  .dashboard-panel {
+    padding: 17px;
+  }
+
+  .modern-table {
+    min-width: 900px;
+  }
+
+  .table-card {
+    overflow-x: auto;
+  }
+}
