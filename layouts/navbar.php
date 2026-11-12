@@ -43,6 +43,7 @@ $nv_modul = [
     'agenda'       => ['Administrasi', 'Agenda', 'agenda/index.php'],
     'buku_tamu'    => ['Layanan Tamu', 'Buku Tamu', 'buku_tamu/index.php'],
     'pegawai'      => ['Kepegawaian', 'Data Pegawai', 'pegawai/index.php'],
+    'ketidakhadiran' => ['Kepegawaian', 'Ketidakhadiran Pegawai', 'ketidakhadiran/index.php'],
     'users'        => ['Pengaturan', 'Data User', 'users/index.php'],
     'laporan'      => ['Laporan', null, null],
     'pengaturan'   => ['Pengaturan', null, null],
@@ -54,6 +55,7 @@ $nv_halaman = [
     'edit'            => 'Edit',
     'detail'          => 'Detail',
     'disposisi'       => 'Disposisi',
+    'catat_disposisi' => 'Catat Hasil Disposisi',
     'cetak_disposisi' => 'Cetak Disposisi',
     'pendaftaran'     => 'Pendaftaran Akun',
     'cadangan'        => 'Cadangan Database',
@@ -65,10 +67,14 @@ $nv_laporan = [
     'surat_keluar'      => 'Laporan Surat Keluar',
     'buku_tamu'         => 'Laporan Buku Tamu',
     'pegawai'           => 'Laporan Data Pegawai',
+    'disposisi_surat'   => 'Laporan Disposisi dan Arsip',
+    'ketidakhadiran'    => 'Laporan Ketidakhadiran Pegawai',
     'cetak_surat_masuk'  => 'Cetak Surat Masuk',
     'cetak_surat_keluar' => 'Cetak Surat Keluar',
     'cetak_buku_tamu'    => 'Cetak Buku Tamu',
     'cetak_pegawai'      => 'Cetak Data Pegawai',
+    'cetak_disposisi_surat' => 'Cetak Laporan Disposisi dan Arsip',
+    'cetak_ketidakhadiran' => 'Cetak Laporan Ketidakhadiran',
 ];
 
 /* hasil: daftar [label, url|null] */

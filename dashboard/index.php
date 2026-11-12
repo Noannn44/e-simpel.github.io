@@ -11,6 +11,23 @@ include "../config/database.php";
 
 date_default_timezone_set('Asia/Makassar');
 
+require_once "../config/ketidakhadiran.php";
+siapkanTabelKetidakhadiran($koneksi);
+
+/* pegawai yang tidak hadir hari ini (tugas luar / cuti) */
+$kh_hari_ini = [];
+try {
+    $kh_tgl = date('Y-m-d');
+    $kh_st = mysqli_prepare($koneksi, "SELECT k.jenis, k.tanggal_selesai, k.tujuan, k.keperluan, p.nama
+        FROM ketidakhadiran k JOIN pegawai p ON p.id = k.pegawai_id
+        WHERE ? BETWEEN k.tanggal_mulai AND k.tanggal_selesai
+        ORDER BY k.jenis ASC, p.nama ASC");
+    mysqli_stmt_bind_param($kh_st, "s", $kh_tgl);
+    mysqli_stmt_execute($kh_st);
+    $kh_res = mysqli_stmt_get_result($kh_st);
+    while ($kh_res && ($kh_r = mysqli_fetch_assoc($kh_res))) { $kh_hari_ini[] = $kh_r; }
+} catch (Throwable $e) { $kh_hari_ini = []; }
+
 $total_pegawai = mysqli_num_rows(mysqli_query($koneksi, "SELECT * FROM pegawai"));
 $total_masuk   = mysqli_num_rows(mysqli_query($koneksi, "SELECT * FROM surat_masuk"));
 $total_keluar  = mysqli_num_rows(mysqli_query($koneksi, "SELECT * FROM surat_keluar"));
@@ -66,19 +83,32 @@ $perubahan_tamu = $tamu_ada
 
 
 /* =========================================================
-   GRAFIK KUNJUNGAN TAMU BULANAN (TAHUN BERJALAN)
+   GRAFIK BULANAN (TAHUN BERJALAN): TAMU, SURAT MASUK, SURAT KELUAR
 ========================================================= */
 
 $tahun_berjalan = (int) date('Y');
-$grafik_tamu = array_fill(1, 12, 0);
 
-if ($tamu_ada) {
-    $q_tamu = mysqli_query($koneksi, "SELECT MONTH(tanggal_kunjungan) AS bln, COUNT(*) AS jumlah
-        FROM tamu WHERE YEAR(tanggal_kunjungan) = $tahun_berjalan GROUP BY bln");
-    while ($row = mysqli_fetch_assoc($q_tamu)) {
-        $grafik_tamu[(int) $row['bln']] = (int) $row['jumlah'];
+function grafikBulanan($koneksi, $tabel, $kolom, $tahun)
+{
+    $hasil = array_fill(1, 12, 0);
+
+    $q = mysqli_query($koneksi, "SELECT MONTH($kolom) AS bln, COUNT(*) AS jumlah
+        FROM $tabel WHERE YEAR($kolom) = $tahun GROUP BY bln");
+
+    if ($q) {
+        while ($row = mysqli_fetch_assoc($q)) {
+            $hasil[(int) $row['bln']] = (int) $row['jumlah'];
+        }
     }
+
+    return array_values($hasil);
 }
+
+$grafik_semua = [
+    'tamu'      => $tamu_ada ? grafikBulanan($koneksi, 'tamu', 'tanggal_kunjungan', $tahun_berjalan) : array_fill(0, 12, 0),
+    'masuk'     => grafikBulanan($koneksi, 'surat_masuk', 'tanggal_diterima', $tahun_berjalan),
+    'keluar'    => grafikBulanan($koneksi, 'surat_keluar', 'tanggal_surat', $tahun_berjalan),
+];
 
 
 /* =========================================================
@@ -352,6 +382,63 @@ include "../layouts/sidebar.php";
     background: var(--color-primary);
     color: #fff;
     box-shadow: 0 4px 10px rgba(251,124,60,.35);
+}
+
+.chart-tahun {
+    margin-left: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--color-text-muted);
+}
+
+.chart-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 2px 0 14px;
+}
+
+.chart-chip {
+    --chip: #2F6FED;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 14px 7px 12px;
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    background: var(--color-surface);
+    color: var(--color-text-muted);
+    font-size: 12.5px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all .2s var(--ease-smooth);
+}
+
+.chart-chip i {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--chip);
+    opacity: .55;
+    transition: all .2s var(--ease-smooth);
+}
+
+.chart-chip:hover {
+    color: var(--color-text);
+    border-color: var(--chip);
+    transform: translateY(-1px);
+}
+
+.chart-chip.active {
+    color: var(--color-text);
+    border-color: var(--chip);
+    background: color-mix(in srgb, var(--chip) 12%, transparent);
+    box-shadow: 0 4px 12px color-mix(in srgb, var(--chip) 22%, transparent);
+}
+
+.chart-chip.active i {
+    opacity: 1;
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--chip) 22%, transparent);
 }
 
 .chart-box { height: 280px; position: relative; }
@@ -629,6 +716,60 @@ include "../layouts/sidebar.php";
 
 </div>
 
+<style>
+.kh-dash { margin-bottom: 22px; }
+.kh-dash-head { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:12px; }
+.kh-dash-head h3 { margin:0; font-size:15px; font-weight:800; color:var(--color-text); display:flex; align-items:center; gap:9px; }
+.kh-dash-head h3 .ic { width:30px; height:30px; border-radius:10px; background:#E0F2FE; display:flex; align-items:center; justify-content:center; }
+.kh-dash-head a { font-size:12.5px; font-weight:700; color:#0369A1; text-decoration:none; }
+.kh-dash-head a:hover { text-decoration:underline; }
+.kh-dash-list { display:grid; grid-template-columns:repeat(auto-fill, minmax(250px, 1fr)); gap:12px; }
+.kh-dash-item { padding:13px 15px; border-radius:16px; background:var(--color-surface); border:1px solid var(--color-border); border-left:5px solid #0EA5E9; box-shadow:var(--shadow-card); }
+.kh-dash-item.cuti { border-left-color:#F59E0B; }
+.kh-dash-item h4 { margin:0; font-size:13.5px; font-weight:800; color:var(--color-text); }
+.kh-dash-item p { margin:5px 0 0; font-size:12px; color:var(--color-text-muted); line-height:1.45; }
+.kh-dash-tag { display:inline-block; margin-top:7px; padding:2px 10px; border-radius:999px; font-size:10.5px; font-weight:800; background:#E0F2FE; color:#0369A1; }
+.kh-dash-item.cuti .kh-dash-tag { background:#FEF3C7; color:#B45309; }
+.kh-dash-kosong { padding:18px; border-radius:16px; background:var(--color-surface); border:1px dashed var(--color-border); color:var(--color-text-muted); font-size:13px; text-align:center; }
+</style>
+
+<div class="kh-dash">
+
+    <div class="kh-dash-head">
+        <h3>
+            <span class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0369A1" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+            Tidak hadir hari ini
+        </h3>
+        <a href="../ketidakhadiran/index.php">Kelola &rarr;</a>
+    </div>
+
+    <?php if ($kh_hari_ini) { ?>
+
+        <div class="kh-dash-list">
+            <?php foreach ($kh_hari_ini as $kh) { ?>
+                <div class="kh-dash-item <?= $kh['jenis'] === 'Cuti' ? 'cuti' : ''; ?>">
+                    <h4><?= htmlspecialchars($kh['nama']); ?></h4>
+                    <p>
+                        <?php if ($kh['jenis'] === 'Tugas Luar') { ?>
+                            <?= htmlspecialchars(($kh['keperluan'] ?? '') !== '' ? $kh['keperluan'] : 'Acara belum dicatat'); ?><?= ($kh['tujuan'] ?? '') !== '' ? ' &middot; ' . htmlspecialchars($kh['tujuan']) : ''; ?>
+                        <?php } else { ?>
+                            Sedang cuti
+                        <?php } ?>
+                        <br>Sampai <?= htmlspecialchars(khTanggalPanjang($kh['tanggal_selesai'])); ?>
+                    </p>
+                    <span class="kh-dash-tag"><?= htmlspecialchars($kh['jenis']); ?></span>
+                </div>
+            <?php } ?>
+        </div>
+
+    <?php } else { ?>
+
+        <div class="kh-dash-kosong">Semua pegawai hadir. Tidak ada tugas luar atau cuti hari ini.</div>
+
+    <?php } ?>
+
+</div>
+
     <!-- CHART + PROMO -->
     <div class="dash-row">
 
@@ -636,13 +777,27 @@ include "../layouts/sidebar.php";
             <div class="panel-head">
                 <h3>
                     <span class="dot-icon"><svg viewBox="0 0 24 24"><path d="M3 3v18h18"></path><path d="M7 15l4-4 3 3 5-6"></path></svg></span>
-                    Statistik Kunjungan Tamu
+                    <span id="judulGrafik">Statistik Kunjungan Tamu</span>
+                    <small class="chart-tahun"><?= $tahun_berjalan; ?></small>
                 </h3>
                 <div class="chart-toggle">
                     <button type="button" class="active" data-type="line">Line</button>
                     <button type="button" data-type="bar">Bar</button>
                 </div>
             </div>
+
+            <div class="chart-chips" id="chipGrafik" role="tablist" aria-label="Pilih statistik">
+                <button type="button" class="chart-chip active" data-jenis="tamu" style="--chip: #2F6FED;" role="tab" aria-selected="true">
+                    <i></i>Kunjungan Tamu
+                </button>
+                <button type="button" class="chart-chip" data-jenis="masuk" style="--chip: #FB7C3C;" role="tab" aria-selected="false">
+                    <i></i>Surat Masuk
+                </button>
+                <button type="button" class="chart-chip" data-jenis="keluar" style="--chip: #16A34A;" role="tab" aria-selected="false">
+                    <i></i>Surat Keluar
+                </button>
+            </div>
+
             <div class="chart-box"><canvas id="grafikTamu"></canvas></div>
         </div>
 
@@ -699,7 +854,7 @@ include "../layouts/sidebar.php";
                     <span class="qicon orange"><svg viewBox="0 0 24 24"><path d="M3 7l9 6 9-6"></path><rect x="3" y="5" width="18" height="14" rx="2"></rect></svg></span>
                     Surat Keluar
                 </a>
-                <a href="../surat_masuk/index.php" class="quick-btn">
+                <a href="#" class="quick-btn">
                     <span class="qicon purple"><svg viewBox="0 0 24 24"><path d="M9 12h6M9 16h6M9 8h6"></path><path d="M6 3h9l3 3v15H6z"></path></svg></span>
                     Disposisi
                 </a>
@@ -728,33 +883,56 @@ include "../layouts/sidebar.php";
 document.addEventListener('DOMContentLoaded', function () {
 
     var namaBulan = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
-    var dataTamu = <?= json_encode(array_values($grafik_tamu)); ?>;
+
+    var semuaData = <?= json_encode($grafik_semua); ?>;
+
+    var konfig = {
+        tamu:      { judul: 'Statistik Kunjungan Tamu',  label: 'Tamu',          warna: [47, 111, 237] },
+        masuk:     { judul: 'Statistik Surat Masuk',     label: 'Surat Masuk',   warna: [251, 124, 60] },
+        keluar:    { judul: 'Statistik Surat Keluar',    label: 'Surat Keluar',  warna: [22, 163, 74] }
+    };
+
+    var jenisAktif = 'tamu';
+    var tipeAktif = 'line';
 
     var ctx = document.getElementById('grafikTamu');
-    var biru = getComputedStyle(document.documentElement).getPropertyValue('--card-blue').trim();
 
-    var gradient = ctx.getContext('2d').createLinearGradient(0, 0, 0, 260);
-    gradient.addColorStop(0, 'rgba(47,111,237,.25)');
-    gradient.addColorStop(1, 'rgba(47,111,237,0)');
+    function rgba(w, a) { return 'rgba(' + w[0] + ',' + w[1] + ',' + w[2] + ',' + a + ')'; }
+
+    function isiDataset(ds) {
+        var k = konfig[jenisAktif];
+        var solid = rgba(k.warna, 1);
+
+        ds.label = k.label;
+        ds.data = semuaData[jenisAktif];
+        ds.borderColor = solid;
+        ds.pointBackgroundColor = solid;
+
+        if (tipeAktif === 'line') {
+            var g = ctx.getContext('2d').createLinearGradient(0, 0, 0, 260);
+            g.addColorStop(0, rgba(k.warna, .25));
+            g.addColorStop(1, rgba(k.warna, 0));
+            ds.backgroundColor = g;
+            ds.fill = true;
+        } else {
+            ds.backgroundColor = rgba(k.warna, .85);
+            ds.fill = false;
+        }
+    }
+
+    var dataset = {
+        tension: 0.4,
+        pointRadius: 3,
+        pointBorderColor: '#fff',
+        pointBorderWidth: 2,
+        borderWidth: 2.5,
+        borderRadius: 6
+    };
+    isiDataset(dataset);
 
     var chart = new Chart(ctx, {
         type: 'line',
-        data: {
-            labels: namaBulan,
-            datasets: [{
-                label: 'Tamu',
-                data: dataTamu,
-                borderColor: biru,
-                backgroundColor: gradient,
-                fill: true,
-                tension: 0.4,
-                pointRadius: 3,
-                pointBackgroundColor: biru,
-                pointBorderColor: '#fff',
-                pointBorderWidth: 2,
-                borderWidth: 2.5
-            }]
-        },
+        data: { labels: namaBulan, datasets: [dataset] },
         options: {
             responsive: true,
             maintainAspectRatio: false,
@@ -774,12 +952,32 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
+    function perbaruiGrafik() {
+        isiDataset(chart.data.datasets[0]);
+        chart.config.type = tipeAktif;
+        document.getElementById('judulGrafik').textContent = konfig[jenisAktif].judul;
+        chart.update();
+    }
+
+    document.querySelectorAll('.chart-chip').forEach(function (chip) {
+        chip.addEventListener('click', function () {
+            document.querySelectorAll('.chart-chip').forEach(function (c) {
+                c.classList.remove('active');
+                c.setAttribute('aria-selected', 'false');
+            });
+            this.classList.add('active');
+            this.setAttribute('aria-selected', 'true');
+            jenisAktif = this.dataset.jenis;
+            perbaruiGrafik();
+        });
+    });
+
     document.querySelectorAll('.chart-toggle button').forEach(function (btn) {
         btn.addEventListener('click', function () {
             document.querySelector('.chart-toggle button.active').classList.remove('active');
             this.classList.add('active');
-            chart.config.type = this.dataset.type;
-            chart.update();
+            tipeAktif = this.dataset.type;
+            perbaruiGrafik();
         });
     });
 

@@ -559,7 +559,7 @@ include "../layouts/sidebar.php";
 
                         <h5>Aksi</h5>
 
-                        <a href="disposisi.php?id=<?= (int) $data['id']; ?>" target="_blank" class="action-item">
+                        <a href="disposisi.php?id=<?= (int) $data['id']; ?>" class="action-item" id="dmBuka">
                             <span class="ai-icon blue"><svg viewBox="0 0 24 24"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg></span>
                             Cetak Lembar Disposisi
                         </a>
@@ -591,6 +591,128 @@ include "../layouts/sidebar.php";
     </div>
 
 </div>
+
+<!-- ===================== POPUP LEMBAR DISPOSISI ===================== -->
+
+<style>
+.dm-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    background: rgba(15, 23, 42, .55);
+    backdrop-filter: blur(2px);
+}
+.dm-overlay.tampil { display: flex; animation: dmFade .18s ease; }
+.dm-dialog {
+    width: min(880px, 100%);
+    height: min(90vh, 960px);
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, .35);
+    animation: dmNaik .2s ease;
+}
+.dm-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    border-bottom: 1px solid #e5e7eb;
+    font-size: 15px;
+    font-weight: 700;
+}
+.dm-x {
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 8px;
+    background: #f1f1f3;
+    font-size: 16px;
+    line-height: 1;
+    cursor: pointer;
+}
+.dm-x:hover { background: #e4e4e8; }
+.dm-body { position: relative; flex: 1; background: #eeeeee; }
+.dm-body iframe { width: 100%; height: 100%; border: 0; display: block; }
+.dm-loading {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    color: #666;
+    pointer-events: none;
+}
+@keyframes dmFade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes dmNaik { from { transform: translateY(12px) scale(.98); } to { transform: none; } }
+</style>
+
+<div class="dm-overlay" id="dmOverlay" aria-hidden="true">
+    <div class="dm-dialog" role="dialog" aria-modal="true" aria-label="Lembar Disposisi">
+        <div class="dm-head">
+            <span>Lembar Disposisi</span>
+            <button type="button" class="dm-x" id="dmTutup" aria-label="Tutup">&#10005;</button>
+        </div>
+        <div class="dm-body">
+            <div class="dm-loading" id="dmLoading">Memuat lembar disposisi...</div>
+            <iframe id="dmFrame" title="Lembar Disposisi" src="about:blank"></iframe>
+        </div>
+    </div>
+</div>
+
+<script>
+(function () {
+    var overlay = document.getElementById('dmOverlay');
+    var frame = document.getElementById('dmFrame');
+    var loading = document.getElementById('dmLoading');
+    var tombol = document.getElementById('dmBuka');
+
+    function buka(url) {
+        loading.style.display = 'flex';
+        frame.src = url;
+        overlay.classList.add('tampil');
+        overlay.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+    }
+
+    window.tutupDisposisi = function () {
+        overlay.classList.remove('tampil');
+        overlay.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+        frame.src = 'about:blank';
+    };
+
+    frame.addEventListener('load', function () {
+        if (frame.getAttribute('src') !== 'about:blank') {
+            loading.style.display = 'none';
+        }
+    });
+
+    if (tombol) {
+        tombol.addEventListener('click', function (e) {
+            e.preventDefault();
+            buka(tombol.getAttribute('href'));
+        });
+    }
+
+    document.getElementById('dmTutup').addEventListener('click', window.tutupDisposisi);
+
+    overlay.addEventListener('click', function (e) {
+        if (e.target === overlay) window.tutupDisposisi();
+    });
+
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && overlay.classList.contains('tampil')) window.tutupDisposisi();
+    });
+})();
+</script>
 
 <?php
 include "../layouts/footer.php";

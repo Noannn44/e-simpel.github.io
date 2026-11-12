@@ -443,5 +443,21 @@ table.doc-table td { border: 1px solid #000; padding: 5px 7px; vertical-align: t
 
 </div>
 
+<script>
+// Bila dibuka di dalam popup (iframe) pada halaman detail, tombol Kembali menjadi Tutup.
+if (window.self !== window.top) {
+    var tombolKembali = document.querySelector('.btn-back');
+    if (tombolKembali) {
+        tombolKembali.textContent = '\u2715 Tutup';
+        tombolKembali.setAttribute('href', '#');
+        tombolKembali.addEventListener('click', function (e) {
+            e.preventDefault();
+            if (window.parent && typeof window.parent.tutupDisposisi === 'function') {
+                window.parent.tutupDisposisi();
+            }
+        });
+    }
+}
+</script>
 </body>
 </html>

@@ -41,6 +41,7 @@ $kepegawaianAktif =
     menuAktif('/pegawai/') ||
     menuAktif('/absensi/') ||
     menuAktif('/cuti/') ||
+    menuAktif('/ketidakhadiran/') ||
     menuAktif('/tugas_luar/');
 
 $laporanAktif = menuAktif('/laporan/');
@@ -556,6 +557,8 @@ body.sidebar-collapsed .submenu { display: none; }
         <div class="submenu <?= $kepegawaianAktif ? 'open' : ''; ?>" id="submenu-kepegawaian">
             <a href="<?= $base_url; ?>/pegawai/index.php"
                class="<?= menuAktif('/pegawai/') ? 'active' : ''; ?>">Data Pegawai</a>
+            <a href="<?= $base_url; ?>/ketidakhadiran/index.php"
+               class="<?= menuAktif('/ketidakhadiran/') ? 'active' : ''; ?>">Ketidakhadiran Pegawai</a>
         </div>
 
         <div class="menu-gap"></div>
@@ -586,6 +589,8 @@ body.sidebar-collapsed .submenu { display: none; }
                class="<?= menuAktif('/laporan/surat_keluar.php') ? 'active' : ''; ?>">Laporan Surat Keluar</a>
             <a href="<?= $base_url; ?>/laporan/buku_tamu.php"
                class="<?= menuAktif('/laporan/buku_tamu.php') || menuAktif('/laporan/cetak_buku_tamu.php') ? 'active' : ''; ?>">Laporan Buku Tamu</a>
+            <a href="<?= $base_url; ?>/laporan/ketidakhadiran.php"
+               class="<?= menuAktif('/laporan/ketidakhadiran.php') || menuAktif('/laporan/cetak_ketidakhadiran.php') ? 'active' : ''; ?>">Laporan Ketidakhadiran</a>
         </div>
 
         <?php if ($isAdminMenu) { ?>
